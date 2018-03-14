@@ -1,0 +1,75 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.main {
+    width: 96%;
+    margin: 0 2%;
+}
+
+.title {
+    text-align: center;
+}
+
+.label {
+    font-size: 16px;
+    color: #0073ed;
+    cursor: pointer;
+    width: 200px;
+    height: 35px;
+    line-height: 35px;
+    margin: 20px auto;
+    display: block;
+    outline: none;
+    text-align: center;
+    border: 1px solid #8cc4f0;
+}
+
+.tip {
+    position: absolute;
+    width: 100%;
+    top: 45px;
+    height: 75px;
+    line-height: 75px;
+    text-align: center;
+    background: #ffffff;
+    color: #ed4835;
+    display: none;
+}
+
+#invoice {
+    width: 0;
+    height: 0;
+    outline: none;
+}
+
+table {
+    display: block;
+    overflow: auto;
+    word-break: normal;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table tr {
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+}
+
+table th, table td {
+    padding: 6px 13px;
+    border: 1px solid #ddd;
+}
+
+table th {
+    font-weight: bold;
+    background: #f0f0f0;
+    color: #333;
+}

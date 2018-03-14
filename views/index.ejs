@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+  <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+<h1 class="title"><%= title %></h1>
+<div class="main">
+  <label class="label" for="invoice">
+    <input id="invoice" type="file" name="invoice"
+           accept="image/png,image/jpeg">
+    +上传发票
+  </label>
+  <div class="tip"></div>
+  <table border="0" class="result-list">
+    <tr>
+      <th>车牌号</th>
+      <th>开票日期</th>
+      <th>通行日期起</th>
+      <th>通行日期止</th>
+      <th>发票代码</th>
+      <th>发票号码</th>
+      <th>购方名称</th>
+      <th>销方名称</th>
+      <th>未税金额</th>
+      <th>进项税额</th>
+      <th>价税合计</th>
+      <th>税率</th>
+    </tr>
+  </table>
+</div>
+
+<script>
+  document.querySelector('#invoice').onchange = function () {
+    var $tip = $('.tip')
+    var file = document.querySelector('#invoice').files[0]
+    if (file) {
+      $tip.show().html('正在读取发票...')
+      var fr = new FileReader()
+      fr.onload = function (ev) {
+        $tip.show().html('正在解析发票...')
+        $.ajax({
+          url: '/api/base64',
+          type: 'post',
+          dataType: 'json',
+          data: {
+            image: fr.result.replace(/data:image\/\w*;base64,/g, '')
+          },
+          success: function (rs) {
+            $tip.hide().html('')
+            var row = rs.data;
+            console.log(rs.data)
+            var html = '<tr>'
+            html += '<td>' + row.license + '</td>'
+            html += '<td>' + row.billingDate + '</td>'
+            html += '<td>' + row.travelDate1 + '</td>'
+            html += '<td>' + row.travelDate2 + '</td>'
+            html += '<td>' + row.invoiceCode + '</td>'
+            html += '<td>' + row.invoiceNumber + '</td>'
+            html += '<td>' + row.buyName + '</td>'
+            html += '<td>' + row.saleName + '</td>'
+            html += '<td>' + row.notTax + '</td>'
+            html += '<td>' + row.income + '</td>'
+            html += '<td>' + row.total + '</td>'
+            html += '<td>' + row.taxRate + '</td>'
+            html += '</tr>'
+            $('.result-list').append(html)
+
+          },
+          error: function () {
+
+          }
+        })
+      }
+      fr.readAsDataURL(file)
+    }
+  }
+</script>
+</body>
+</html>
